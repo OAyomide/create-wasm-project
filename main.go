@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"github.com/fatih/color"
 	"github.com/urfave/cli"
 	"log"
@@ -19,10 +18,14 @@ func about() {
 func createForLang(c *cli.Context) error {
 	if c.NArg() > 0 {
 		name := c.Args().First()
-		lang, err := getlang(c)
-		if err != nil {
-			log.Fatal(err)
+		if c.Args().First() == " " {
+			nm, err := os.Getwd()
+			name = nm
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
+		lang := getlang(c)
 		color.Magenta("🛠 Creating new WASM project %s for language: %s...", name, lang)
 		var newp = NewProject{lang: lang, name: name}
 		newp.Index()
@@ -31,12 +34,12 @@ func createForLang(c *cli.Context) error {
 	return nil
 }
 
-func getlang(c *cli.Context) (string, error) {
+func getlang(c *cli.Context) string {
 	lang := c.String("language")
 	if lang != "" {
-		return lang, nil
+		return lang
 	}
-	return "", errors.New("Please pass a language")
+	return ""
 }
 
 func commands() {
@@ -49,7 +52,7 @@ func commands() {
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:     "language, l",
-					Required: true,
+					Required: false,
 				},
 			},
 		},

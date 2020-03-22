@@ -1,6 +1,7 @@
 package main
 
 import (
+	langs "festus/langs"
 	"fmt"
 )
 
@@ -13,7 +14,8 @@ func (proj *NewProject) Index() {
 	switch proj.lang {
 	case "go":
 		fmt.Println("Should handle go stuff here...")
-
+		// CreateGo(proj.lang, proj.name)
+		langs.CreateGo(proj.lang, proj.name)
 	default:
 		fmt.Println("No language passed...")
 	}
