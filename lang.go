@@ -16,6 +16,8 @@ func (proj *NewProject) Index() {
 		fmt.Println("Should handle go stuff here...")
 		// CreateGo(proj.lang, proj.name)
 		langs.CreateGo(proj.lang, proj.name)
+	case "rust":
+		langs.Install_deps()
 	default:
 		fmt.Println("No language passed...")
 	}
